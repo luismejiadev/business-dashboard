@@ -1,0 +1,22 @@
+{%load i18n%}
+{% regroup module_children by description as grouped_children %}
+{% for section in grouped_children %}
+{% if section.grouper != '.' %}
+    <h3 {% if css_class %}class="{{css_class}}" {% else %}"main"{% endif %}>{{ section.grouper }}</h3>
+{% endif%}
+<ul>
+    {% for child in section.list %}
+    {% spaceless %}
+    <li>
+        {% if child.url %}<a href="{{ child.url }}">{{ child.title }}</a>{% else %}{{ child.title }}{% endif %}
+        {% if child.add_url or child.change_url %}
+        <ul>
+            {% if child.add_url %}<li><a class="addlink" href="{{ child.add_url }}"><span class="icon">{% trans "Add" %}</span></a></li>{% endif %}
+            {% if child.change_url %}<li><a class="changelink" href="{{ child.change_url }}"><span class="icon">{% trans "Change" %}</span></a></li>{% endif %}
+        </ul>
+        {% endif %}
+    </li>
+    {% endspaceless %}
+    {% endfor %}
+</ul>
+{% endfor %}

@@ -1,0 +1,24 @@
+{% load extratags %}
+{% block extrahead%}
+    {{ block.super }}
+
+    <script type="text/javascript">
+        {% include chart_template %}
+    </script>   
+{% endblock %}
+    <div id="module_{{ module.id }}" class="{{ module.render_css_classes }}">
+        {% if module.show_title %}<h2>{{ module.title }}</h2>{% endif %}
+        <div class="dashboard-module-content" style="display:block">
+            {% spaceless %}
+            {% if module.pre_content %}
+            <p>{{ module.pre_content }}</p>
+            {% endif %}
+            {% block module_content %}
+                <div id="chart-{{ module.id }}-container" style=" display:block; min-width: 310px; max-width: 100%; height: 300px; margin: 0 auto"></div>
+            {% endblock %}
+            {% if module.post_content %}
+            <p>{{ module.post_content }}</p>
+            {% endif %}
+            {% endspaceless %}
+        </div>
+    </div>

@@ -1,0 +1,15 @@
+{% extends "admin_tools/dashboard/module.html" %}
+{% block module_content %}
+    <style>
+        .dashboard-module h2{ background:#33CCFF; font-weight: bold; color:black;}
+        .dashboard-module h3.main{ background:#B7E7FF; font-weight: bold; color:black;}
+
+    </style>
+    {% include 'admin/dashboard/grouped_content.html' with module_children=module.children css_class="main" %}
+    {% for row in module.sub_modules %}
+        {% if not row.is_empty %}
+            <h3 class="{% if row.css_class %}{{css_class}} {%else %}main {%endif %}">{{ row.title }}</h3>
+            {% include 'admin/dashboard/grouped_content.html' with module_children=row.children css_class="subtitle" %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
